@@ -1,0 +1,67 @@
+import { useState } from "react";
+import { Button, Card, CardHeader, CardTitle, CardContent } from "@heroui/react";
+import { useTodos } from "@/hooks/useTodos";
+import { Todo as TodoType } from "@/types";
+import TodoInput from "./TodoInput";
+import TodoItem from "./TodoItem";
+import TodoStats from "./TodoStats";
+
+
+type Filter = "all" | "active" | "completed";
+
+const FILTERS: Filter[] = ["all", "active", "completed"];
+
+export default function TodoList() {
+  const { todos, addTodo, toggleTodo, deleteTodo, editTodo } = useTodos();
+  const [filter, setFilter] = useState<Filter>("all");
+
+  const filtered: TodoType[] = todos.filter((t) => {
+    if (filter === "active") return !t.completed;
+    if (filter === "completed") return t.completed;
+    return true;
+  });
+
+  const completedCount = todos.filter((t) => t.completed).length;
+
+  return (
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle>Todo List</CardTitle>
+      </CardHeader>
+
+      <CardContent className="flex flex-col gap-4">
+        <TodoInput onAdd={addTodo} />
+
+        <div className="flex justify-center gap-2">
+          {FILTERS.map((f) => (
+            <Button
+              key={f}
+              variant={filter === f ? "primary" : "tertiary"}
+              size="sm"
+              onPress={() => setFilter(f)}
+            >
+              {f.charAt(0).toUpperCase() + f.slice(1)}
+            </Button>
+          ))}
+        </div>
+
+        <TodoStats total={todos.length} completed={completedCount} />
+
+        <div className="flex flex-col gap-2">
+          {filtered.map((todo) => (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onToggle={toggleTodo}
+              onDelete={deleteTodo}
+              onEdit={editTodo}
+            />
+          ))}
+          {filtered.length === 0 && (
+            <p className="text-center text-muted py-8">No todos found</p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
