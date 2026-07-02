@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { Button, Card, CardHeader, CardTitle, CardContent } from "@heroui/react";
-import { useTodos } from "@/hooks/useTodos";
 import { Todo as TodoType } from "@/types";
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
 import TodoStats from "./TodoStats";
 
-
 type Filter = "all" | "active" | "completed";
 
 const FILTERS: Filter[] = ["all", "active", "completed"];
 
-export default function TodoList() {
-  const { todos, addTodo, toggleTodo, deleteTodo, editTodo } = useTodos();
+interface Props {
+  todos: TodoType[];
+  addTodo: (text: string) => void;
+  toggleTodo: (id: string) => void;
+  deleteTodo: (id: string) => void;
+  editTodo: (id: string, text: string) => void;
+}
+
+export default function TodoList({ todos, addTodo, toggleTodo, deleteTodo, editTodo }: Props) {
   const [filter, setFilter] = useState<Filter>("all");
 
   const filtered: TodoType[] = todos.filter((t) => {
@@ -26,7 +31,7 @@ export default function TodoList() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Todo List</CardTitle>
+        <CardTitle>Aku nak ni bole?</CardTitle>
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4">

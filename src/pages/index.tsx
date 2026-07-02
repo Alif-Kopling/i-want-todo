@@ -1,11 +1,22 @@
+import { useTodos } from "@/hooks/useTodos";
 import DefaultLayout from "@/layouts/default";
 import TodoList from "@/components/todo/TodoList";
+import todosData from "../data/todos.json";
+import type { Todo } from "@/types";
+
+const initialTodos: Todo[] = todosData.map((t: Record<string, unknown>) => ({
+  id: String(t.id),
+  text: String(t.text),
+  completed: Boolean(t.isCompleted),
+  createdAt: Date.now(),
+}));
 
 export default function IndexPage() {
+  const todoProps = useTodos(initialTodos);
   return (
     <DefaultLayout>
       <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-        <TodoList />
+        <TodoList {...todoProps} />
       </section>
     </DefaultLayout>
   );

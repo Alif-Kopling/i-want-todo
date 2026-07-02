@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Todo } from "@/types";
 
-export function useTodos() {
+export function useTodos(initialData?: Todo[]) {
   const [todos, setTodos] = useState<Todo[]>(() => {
     const saved = localStorage.getItem("todos");
-    return saved ? JSON.parse(saved) : [];
+    if (saved && saved !== "[]") return JSON.parse(saved);
+    return initialData ?? [];
   });
 
   useEffect(() => {

@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "text": "RTX 5090TI",
+        "isCompleted": true
+    },
+    {
+        "id": 2,
+        "text": "ROG Swift OLED PG32UCDM",
+        "isCompleted": true
+    },
+    {
+        "id": 3,
+        "text": "I9 15900kf",
+        "isCompleted": false
+    }
+]

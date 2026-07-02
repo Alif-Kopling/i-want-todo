@@ -25,7 +25,7 @@ export default function TodoInput({ onAdd }: Props) {
         }}
       >
         <InputGroup>
-          <InputGroup.Input placeholder="Add a new todo..." />
+          <InputGroup.Input placeholder="Tambahkan list keinginan..." />
         </InputGroup>
       </TextField>
       <Button variant="primary" onPress={handleSubmit}>
