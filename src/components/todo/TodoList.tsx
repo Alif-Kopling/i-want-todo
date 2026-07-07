@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { Button, Card, CardHeader, CardTitle, CardContent } from "@heroui/react";
-import { Todo as TodoType } from "@/types";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@heroui/react";
+
 import TodoInput from "./TodoInput";
 import TodoItem from "./TodoItem";
 import TodoStats from "./TodoStats";
+
+import { Todo as TodoType } from "@/types";
 
 type Filter = "all" | "active" | "completed";
 
@@ -17,12 +25,19 @@ interface Props {
   editTodo: (id: string, text: string) => void;
 }
 
-export default function TodoList({ todos, addTodo, toggleTodo, deleteTodo, editTodo }: Props) {
+export default function TodoList({
+  todos,
+  addTodo,
+  toggleTodo,
+  deleteTodo,
+  editTodo,
+}: Props) {
   const [filter, setFilter] = useState<Filter>("all");
 
   const filtered: TodoType[] = todos.filter((t) => {
     if (filter === "active") return !t.completed;
     if (filter === "completed") return t.completed;
+
     return true;
   });
 
@@ -41,8 +56,8 @@ export default function TodoList({ todos, addTodo, toggleTodo, deleteTodo, editT
           {FILTERS.map((f) => (
             <Button
               key={f}
-              variant={filter === f ? "primary" : "tertiary"}
               size="sm"
+              variant={filter === f ? "primary" : "tertiary"}
               onPress={() => setFilter(f)}
             >
               {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -50,16 +65,16 @@ export default function TodoList({ todos, addTodo, toggleTodo, deleteTodo, editT
           ))}
         </div>
 
-        <TodoStats total={todos.length} completed={completedCount} />
+        <TodoStats completed={completedCount} total={todos.length} />
 
         <div className="flex flex-col gap-2">
           {filtered.map((todo) => (
             <TodoItem
               key={todo.id}
               todo={todo}
-              onToggle={toggleTodo}
               onDelete={deleteTodo}
               onEdit={editTodo}
+              onToggle={toggleTodo}
             />
           ))}
           {filtered.length === 0 && (

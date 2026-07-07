@@ -17,9 +17,9 @@ export default function TodoInput({ onAdd }: Props) {
   return (
     <div className="flex gap-2 items-start">
       <TextField
+        className="flex-1"
         value={value}
         onChange={setValue}
-        className="flex-1"
         onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === "Enter") handleSubmit();
         }}

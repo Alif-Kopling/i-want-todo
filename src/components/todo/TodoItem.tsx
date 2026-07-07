@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, TextField, InputGroup } from "@heroui/react";
+
 import { Todo } from "@/types";
 
 interface Props {
@@ -28,10 +29,10 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
     return (
       <div className="flex items-center gap-2 p-3 rounded-lg border border-separator">
         <TextField
+          autoFocus
+          className="flex-1"
           value={editValue}
           onChange={setEditValue}
-          className="flex-1"
-          autoFocus
           onKeyDown={(e: React.KeyboardEvent) => {
             if (e.key === "Enter") handleSave();
             if (e.key === "Escape") handleCancel();
@@ -41,10 +42,10 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
             <InputGroup.Input />
           </InputGroup>
         </TextField>
-        <Button variant="primary" size="sm" onPress={handleSave}>
+        <Button size="sm" variant="primary" onPress={handleSave}>
           Save
         </Button>
-        <Button variant="tertiary" size="sm" onPress={handleCancel}>
+        <Button size="sm" variant="tertiary" onPress={handleCancel}>
           Cancel
         </Button>
       </div>
@@ -55,11 +56,11 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
     <div className="flex items-center justify-between gap-2 p-3 rounded-lg border border-separator">
       <div className="flex items-center gap-3">
         <Button
-          variant={todo.completed ? "primary" : "ghost"}
-          size="sm"
           isIconOnly
-          onPress={() => onToggle(todo.id)}
           className="min-w-8 h-8"
+          size="sm"
+          variant={todo.completed ? "primary" : "ghost"}
+          onPress={() => onToggle(todo.id)}
         >
           {todo.completed ? "✓" : "○"}
         </Button>
@@ -74,13 +75,17 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
         </span>
       </div>
       <div className="flex gap-1">
-        <Button variant="ghost" size="sm" onPress={() => {
-          setEditValue(todo.text);
-          setIsEditing(true);
-        }}>
+        <Button
+          size="sm"
+          variant="ghost"
+          onPress={() => {
+            setEditValue(todo.text);
+            setIsEditing(true);
+          }}
+        >
           ✏️
         </Button>
-        <Button variant="ghost" size="sm" onPress={() => onDelete(todo.id)}>
+        <Button size="sm" variant="ghost" onPress={() => onDelete(todo.id)}>
           ✕
         </Button>
       </div>

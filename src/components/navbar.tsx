@@ -1,6 +1,5 @@
 "use client";
 
-import { Link } from "react-router-dom";
 import { ThemeSwitch } from "@/components/theme-switch";
 
 export const Navbar = () => {
